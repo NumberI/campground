@@ -1,7 +1,6 @@
 module Queries
   class CampgroundCollectionQuery
     def initialize(options = {})
-      p '[' * 100, options
       @date_range = options[:date_range]
       @sorting = options[:sorting] || 'asc'
     end
@@ -18,13 +17,15 @@ module Queries
 
     def collection
       campgrounds = if @date_range.present?
+        first_range, last_range = format_date_range
         Campground.eager_load(:bookings)
-                    .where.not("(bookings.booked_date BETWEEN ? AND ?) AND bookings.id IS NOT NULL", 
-                    formatted_date_range[0], formatted_date_range[1] )
-        
+                  .where.not("(bookings.booked_date BETWEEN ? AND ?) AND bookings.id IS NOT NULL",
+                  first_range,
+                  last_range)
       else
         Campground.all
       end
+
       if @sorting == 'asc'
         campgrounds.order(min_price: :asc)
       else
@@ -32,7 +33,7 @@ module Queries
       end
     end
 
-    def formatted_date_range
+    def format_date_range
       @date_range.split('..').map(&:to_date)
     end
   end

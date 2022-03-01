@@ -3,6 +3,7 @@ class Campsite < ApplicationRecord
   belongs_to :campground
 
   accepts_nested_attributes_for :campground
+  
   after_create :set_campground_price
 
   def set_campground_price

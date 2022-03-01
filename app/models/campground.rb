@@ -8,7 +8,6 @@ class Campground < ApplicationRecord
   attribute :price_range, :string
   attribute :booked_dates, :string
 
-
   def price_range
     min_price..max_price
   end
