@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_01_080558) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_01_135327) do
   create_table "bookings", force: :cascade do |t|
-    t.integer "campsite_id", null: false
-    t.integer "campground_id", null: false
     t.date "booked_date"
+    t.integer "campground_id", null: false
+    t.integer "campsite_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["campground_id"], name: "index_bookings_on_campground_id"
